@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+<div th:insert="~{header::nav}"></div>
+    <p th:text="${message}">要被替换的内容</p>
+    <p th:text="${emps}">要被替换的内容</p>
+    <p th:text="${session.user.getName()}">要被替换的内容</p>
+    <p th:text="${emps[1].getName()}">要被替换的内容</p>
+    <p th:text="${ #ctx.getVariable('message')}">要被替换的内容</p>
+<h1 th:text="#{greeting('zs',${#dates.createNow()})}"></h1>
+<div th:insert="~{footer::footer}"></div>
+</body>
+</html>
