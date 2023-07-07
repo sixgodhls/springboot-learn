@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <!-- 引入Bootstrap 4的CSS文件 -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+</head>
+<body>
+<div id="app" class="container py-5">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title mb-4">Login</h3>
+      <form @submit.prevent="sendDataToBackend">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" v-model="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" v-model="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 引入Vue和Axios的JS文件 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.23.0/axios.min.js"></script>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      username: '',
+      password: ''
+    },
+    methods: {
+      sendDataToBackend() {
+        // 1. 将数据封装为一个对象
+        const data = {"username":this.username,"password":this.password}
+        // 2. 将数据转换为JSON字符串，并设置请求头
+        axios.post('http://127.0.0.1:8080/login', JSON.stringify(data), {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          responseType: 'json'
+        })
+                .then(response => {
+                  // 处理响应
+                  localStorage.setItem("token",response.toString());
+                  response.redirect("http://www,baidu.com")
+                })
+                .catch(error => {
+                  // 处理错误
+                  console.log(error)
+                })
+      }
+    }
+  })
+</script>
+</body>
+</html>
